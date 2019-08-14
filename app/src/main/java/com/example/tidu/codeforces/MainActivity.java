@@ -1,5 +1,6 @@
 package com.example.tidu.codeforces;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,9 +52,18 @@ public class MainActivity extends AppCompatActivity {
                                 return;
                             }
                             User user = response.body();
+                            Intent i = new Intent(MainActivity.this,Info.class);
+                            List<User.Result> list = user.getResult();
+                            User.Result result = list.get(0);
+                            i.putExtra("DP",result.getAvatar());
+                            i.putExtra("H",result.getHandle());
+                            i.putExtra("R",result.getRating());
+                            i.putExtra("HR",result.getMaxrating());
+                            i.putExtra("C",result.getCountry());
+                            startActivity(i);
+                            finish();
 
                         }
-
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
                             Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
